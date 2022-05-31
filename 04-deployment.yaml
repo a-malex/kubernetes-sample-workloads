@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx-deploy
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate  # Recreate # BlueGreen
+    maxSurge: 1 # or for example 25%
+    maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernates.io/name: nginx-pod
+      app.kubernates.io/scope: production
+
+
+  template:
+    metadata:
+      name:
+      labels:
+        app.kubernates.io/type: webserver
+        app.kubernates.io/name: nginx-pod
+        app.kubernates.io/scope: production
+        app.kubernates.io/created-by: ahmad
+        app.kubernates.io/version: !!str 1.21.6
+
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: nginx-pod
+          image: nginx:1.21.6
+          ports:
+            - containerPort: 80
+

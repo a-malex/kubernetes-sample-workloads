@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: redis-statefulset
+
+spec:
+  selector:
+    matchLabels:
+      app.kubernates.io/app: redis-app
+  replicas: 3
+  template:
+    metadata:
+      name: redis-pod
+      labels:
+        app.kubernates.io/app: redis-app
+    spec:
+      containers:
+        - name: redis-container
+          image: redis:6
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi
+  serviceName: redis-headless

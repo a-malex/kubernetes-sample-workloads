@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-exporter-daemonset
+  labels:
+    app.kubernates.io/name: node-exporter
+    app.kubernates.io/type: monitoring
+    app.kubernates.io/part-of: prometheus
+
+spec:
+  selector:
+    matchLabels:
+      app.kubernates.io/name: node-exporter
+      app.kubernates.io/part-of: prometheus
+  
+  template:
+
+    metadata:
+      name: node-exporter-pod
+      labels:
+        app.kubernates.io/name: node-exporter
+        app.kubernates.io/type: monitoring
+        app.kubernates.io/part-of: prometheus
+
+    spec:
+      restartPolicy: Always
+      hostNetwork: true
+      volumes:
+        - name: sysfs
+          hostPath:
+            path: /sys
+        - name: rootfs
+          hostPath:
+            path: /
+      containers:
+        - name: node-exporter
+          image: prom/node-exporter
+          ports:
+            - containerPort: 9100
+              hostPort: 9100
+          args:
+            - --path.sysfs=/host/sys
+            - --path.rootfs=/host/root
+
+          volumeMounts:
+            - name: sysfs
+              readOnly: true
+              mountPropagation: HostToContainer
+              mountPath: /host/sys
+            - name: rootfs
+              readOnly: true
+              mountPropagation: HostToContainer
+              mountPath: /host/root
+      
+      

@@ -1,0 +1,45 @@
+avpiVersion: v1
+kind: Pod
+
+metadata:
+  name: testapp
+  lables:
+    app-type: test-kubernetes-probs
+
+spec:
+  containers:
+    - name: testapp
+      image: testapp:1
+      startupProbe:
+        initialDelaySeconds: 15
+        periodSeconds: 5
+        timeoutSeconds: 1
+        failureThreshold: 3
+        successThreshold: 1
+        exec:
+          command:
+            - flask
+            - app
+            - test
+          # command: ["kill", "-0", "1"]
+      livenessProbe:
+        initialDelaySeconds: 1
+        periodSeconds: 3
+        timeoutSeconds: 1
+        failureThreshold: 3
+        successThreshold: 1
+        tcpSocket:
+          port: 8081
+      readinessProbe:
+        initialDelaySeconds: 1
+        periodSeconds: 3
+        timeoutSeconds: 1
+        failureThreshold: 3
+        successThreshold: 1
+        httpGet:
+          host: localhost
+          port: 8080
+          path: /healthz
+          httpHeaders:
+            - name: OCS-APIRequest:
+              value: !!str true

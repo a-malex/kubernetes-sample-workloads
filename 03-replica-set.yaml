@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: nginx-rs
+  labels:
+    app: nginx-replicaset 
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernates.io/name: nginx-pod
+      app.kubernates.io/scope: production
+
+    # matchExpressions:
+    # - key: app.kubernates.io/name
+    #   operator: In
+    #   values:
+    #     - nginx-pod
+    #     - apache-pod
+
+  template:
+    metadata:
+      labels:
+        app.kubernates.io/type: webserver
+        app.kubernates.io/name: nginx-pod
+        app.kubernates.io/scope: production
+        app.kubernates.io/created-by: ahmad
+        app.kubernates.io/version: !!str 1.21.6
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: nginx-container
+          image: nginx:alpine
+          ports:
+          - containerPort: 80
+
+

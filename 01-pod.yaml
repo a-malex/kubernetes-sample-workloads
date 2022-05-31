@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: nginx
+  labels:
+    app.kubernates.io/name: nginx-pod
+    app.kubernates.io/scope: production
+    app.kubernates.io/created-by: ahmad
+    app.kubernates.io/part-of: myapp
+    app.kubernates.io/env: product
+    app.kubernates.io/repository: myapp-repo
+
+
+spec:
+  restartPolicy: Always
+  containers:
+    - name: nginx-container
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+    
+
+---
+
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: apache
+  labels:
+    app.kubernates.io/name: apache-pod
+    app.kubernates.io/scope: production
+    app.kubernates.io/created-by: ahmad
+    app.kubernates.io/part-of: myapp
+    app.kubernates.io/env: product
+    app.kubernates.io/repository: myapp-repo
+    app.kubernates.io/version: !!str 1.21.6
+
+
+spec:
+  restartPolicy: Always
+  containers:
+    - name: apache-container
+      image: nginx:alpine
+      ports:
+        - containerPort: 80

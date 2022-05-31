@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: nextcloud-service
+  labels:
+    app.kubernetes.io/app: nextcloud
+    app.kubernetes.io/part-of: nextcloud
+    app.kubernetes.io/owner: ahmad
+
+spec:
+  selector:
+    app.kubernetes.io/app: nextcloud
+    app.kubernetes.io/part-of: nextcloud
+    app.kubernetes.io/owner: ahmad
+  type: ClusterIP
+  #clusterIP: None  # for headless service
+  #type: NodePort # LoadBalancer
+  ports:
+    #- port: 80
+    - name: 80-tcp-ui
+      port: 80
+      targetPort: 80
