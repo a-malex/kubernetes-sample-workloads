@@ -11,7 +11,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: nextcloud
+      name: nextcloud-service
       port:
         number: 80
   
@@ -19,7 +19,7 @@ spec:
   tls:
     - hosts:
       - nextcloud.ahmad.io
-    secretName: nextcloud.ahmad.io-tls
+      secretName: nextcloud.ahmad.io-tls
   rules:
     - host: nextcloud.ahmad.io
       http: 
@@ -28,6 +28,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: nextcloud
+                name: nextcloud-service
                 port:
                   number: 80

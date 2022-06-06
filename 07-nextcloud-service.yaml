@@ -13,9 +13,8 @@ spec:
     app.kubernetes.io/app: nextcloud
     app.kubernetes.io/part-of: nextcloud
     app.kubernetes.io/owner: ahmad
-  type: ClusterIP
+  type: ClusterIP  #type: NodePort # LoadBalancer
   #clusterIP: None  # for headless service
-  #type: NodePort # LoadBalancer
   ports:
     #- port: 80
     - name: 80-tcp-ui
