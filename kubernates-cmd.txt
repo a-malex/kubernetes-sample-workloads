@@ -1,0 +1,77 @@
+kubectl version --client -o json
+kubectl config view
+
+kubectl api-resources
+
+kubectl create -f manifest.yml
+
+kubectl get nodes
+
+kubectl apply -f pod.yaml
+kubectl get pods
+kubectl get pods -o wide
+
+kubectl delete pods nginx-rc-7bfqq
+
+kubectl describe po
+
+kubectl apply -f replication-Controller.yaml
+kubectl get rc -w -o wide
+kubectl delete rc nginx-rc
+
+kubectl delete all --all
+
+
+نحوه اجرای دستور داخل container درون یک pod	=>	kubctl exec POD_NAME -- COMMAND
+kubectl exec nginx-rs-f5sdj -- nginx -V
+
+watch -n1 kubectl get deploy, rs, po
+
+با استفاده از Deployment میاد یه deployment میسازه و اون deployment میاد یک replica set میسازه و اون میاد pod ها رو میسازه. سلسله مدیریت کردنه این میشه
+
+watch -n1 kubectl get sts,rs,po,pvc -o wide
+
+kubectl rollout restart deployment nextcloud-deployment 
+
+
+kubectl get -o wide pods,deploy,service,replicaset,endpoints,pvc
+
+kubectl get -n kube-system all
+
+kubectl get ingress
+
+kubectl -n ingress-nginx get services
+
+
+openssl req -newkey rsa:2048 -nodes -keyout nextcloud.key -x509 -days 90 -out nextcloud.crt
+
+kubectl create secret tls nextcloud.dwsclass.io-tls --cert=nextcloud.crt --key=nextcloud.key
+
+
+kubectl get cm
+kubectl describe cm
+
+
+kubectl get pv
+kubectl get pvc
+
+
+
+kubectl create configmap ansible-cfg --from-file=/home/ahmad/tmp/ansible.cfg        
+
+kubectl describe cm ansible-cfg
+
+
+
+kubectl get secret
+
+kubectl get secrets NAME -o yaml
+
+
+
+
+
+
+
+
+
