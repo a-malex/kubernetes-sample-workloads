@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: volume-1g-pv
+  labels:
+    storage.k8s.io/name: volume-1g-pv
+    storage.k8s.io/type: nfs
+  
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: FileSystem  # Block
+  storageClassName: ""
+  persistentVolumeReclaimPlicy: Recycle
+  capacity:
+    storage: 1Gi
+  nfs:
+    server: worker-node-01.local
+    path: /share
